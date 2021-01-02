@@ -32,7 +32,7 @@ namespace Microsoft.Xna.Framework
 
         partial void PlatformApplyChanges()
         {
-            ((UAPGameWindow)_game.Window).SetClientSize(_preferredBackBufferWidth, _preferredBackBufferHeight);
+           // ((UAPGameWindow)_game.Window).SetClientSize(_preferredBackBufferWidth, _preferredBackBufferHeight);
         }
     }
 }

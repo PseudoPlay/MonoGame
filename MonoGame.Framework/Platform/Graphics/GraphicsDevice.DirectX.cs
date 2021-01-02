@@ -25,6 +25,7 @@ namespace Microsoft.Xna.Framework.Graphics
 {
     public partial class GraphicsDevice
     {
+      
         // Core Direct3D Objects
         internal SharpDX.Direct3D11.Device _d3dDevice;
         internal SharpDX.Direct3D11.DeviceContext _d3dContext;
@@ -643,7 +644,7 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 Format = format,
 #if WINRT
-                Scaling = DisplayModeScaling.Stretched,
+                Scaling = DisplayModeScaling.Unspecified,
 #else
                 Scaling = DisplayModeScaling.Unspecified,
 #endif
@@ -678,7 +679,7 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 Format = format,
 #if WINRT
-                Scaling = DisplayModeScaling.Stretched,
+                Scaling = DisplayModeScaling.Unspecified,
 #else
                 Scaling = DisplayModeScaling.Unspecified,
 #endif
@@ -786,7 +787,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     {
                         Format = format,
 #if WINDOWS_UAP
-                        Scaling = DisplayModeScaling.Stretched,
+                        Scaling = DisplayModeScaling.Unspecified,
 #else
                         Scaling = DisplayModeScaling.Unspecified,
 #endif

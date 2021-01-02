@@ -84,7 +84,7 @@ namespace Microsoft.Xna.Framework.Graphics
         private int _currentRenderTargetCount;
         private readonly RenderTargetBinding[] _tempRenderTargetBinding = new RenderTargetBinding[1];
 
-        internal GraphicsCapabilities GraphicsCapabilities { get; private set; }
+        public GraphicsCapabilities GraphicsCapabilities { get; private set; }
 
         public TextureCollection VertexTextures { get; private set; }
 
@@ -192,7 +192,7 @@ namespace Microsoft.Xna.Framework.Graphics
             private set;
         }
 
-        internal GraphicsMetrics _graphicsMetrics;
+        public GraphicsMetrics _graphicsMetrics;
 
         /// <summary>
         /// The rendering information for debugging and profiling.
@@ -292,7 +292,9 @@ namespace Microsoft.Xna.Framework.Graphics
             // Initialize the main viewport
             _viewport = new Viewport (0, 0,
 			                         DisplayMode.Width, DisplayMode.Height);
-			_viewport.MaxDepth = 1.0f;
+            Debug.WriteLine(_viewport.Height);
+
+            _viewport.MaxDepth = 1.0f;
 
             PlatformSetup();
 
@@ -688,7 +690,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// Trigger the DeviceResetting event
         /// Currently internal to allow the various platforms to send the event at the appropriate time.
         /// </summary>
-        internal void OnDeviceResetting()
+        public void OnDeviceResetting()
         {
             EventHelpers.Raise(this, DeviceResetting, EventArgs.Empty);
 
@@ -746,6 +748,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
             set
             {
+                Debug.WriteLine(_viewport.Height);
                 _viewport = value;
                 PlatformSetViewport(ref value);
             }

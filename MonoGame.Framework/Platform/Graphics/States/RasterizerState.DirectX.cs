@@ -11,7 +11,7 @@ namespace Microsoft.Xna.Framework.Graphics
     {
         private SharpDX.Direct3D11.RasterizerState _state;
 
-        protected internal override void GraphicsDeviceResetting()
+        public override void GraphicsDeviceResetting()
         {
             SharpDX.Utilities.Dispose(ref _state);
             base.GraphicsDeviceResetting();

@@ -108,7 +108,7 @@ namespace Microsoft.Xna.Framework
             Instance = new UAPGameWindow();
         }
 
-        public void Initialize(CoreWindow coreWindow, UIElement inputElement, TouchQueue touchQueue)
+        public void Initialize(CoreWindow coreWindow, SwapChainPanel inputElement, TouchQueue touchQueue)
         {
             _coreWindow = coreWindow;
             _inputEvents = new InputEvents(_coreWindow, inputElement, touchQueue);
@@ -119,20 +119,22 @@ namespace Microsoft.Xna.Framework
             _orientation = ToOrientation(_dinfo.CurrentOrientation);
             _dinfo.OrientationChanged += DisplayProperties_OrientationChanged;
 
-            _coreWindow.SizeChanged += Window_SizeChanged;
+            inputElement.SizeChanged += InputElement_SizeChanged; ;
 
             _coreWindow.Closed += Window_Closed;
             _coreWindow.Activated += Window_FocusChanged;
             _coreWindow.Dispatcher.AcceleratorKeyActivated += Dispatcher_AcceleratorKeyActivated;
 
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
-                Windows.Phone.UI.Input.HardwareButtons.BackPressed += this.HardwareButtons_BackPressed;
-
-            SetViewBounds(_appView.VisibleBounds.Width, _appView.VisibleBounds.Height);
+     //       if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons"))
+     //           Windows.Phone.UI.Input.HardwareButtons.BackPressed += this.HardwareButtons_BackPressed;
+            var clientArea = inputElement.ActualSize;
+            SetViewBounds(clientArea.X, clientArea.Y);
 
             SetCursor(false);
 
         }
+
+      
 
         internal void RegisterCoreWindowService()
         {
@@ -175,16 +177,17 @@ namespace Microsoft.Xna.Framework
             _viewBounds = new Rectangle(0, 0, pixelWidth, pixelHeight);
         }
 
-        private void Window_SizeChanged(object sender, WindowSizeChangedEventArgs args)
+        private void InputElement_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             lock (_eventLocker)
             {
                 _isSizeChanged = true;
-                var pixelWidth  = Math.Max(1, (int)Math.Round(args.Size.Width * _dinfo.RawPixelsPerViewPixel));
-                var pixelHeight = Math.Max(1, (int)Math.Round(args.Size.Height * _dinfo.RawPixelsPerViewPixel));
+                var pixelWidth = Math.Max(1, (int)Math.Round(e.NewSize.Width * _dinfo.RawPixelsPerViewPixel));
+                var pixelHeight = Math.Max(1, (int)Math.Round(e.NewSize.Height * _dinfo.RawPixelsPerViewPixel));
                 _newViewBounds = new Rectangle(0, 0, pixelWidth, pixelHeight);
             }
         }
+
 
         private void UpdateSize()
         {
@@ -306,16 +309,16 @@ namespace Microsoft.Xna.Framework
             }
         }
 
-        private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
-        {
-            // We need to manually hide the keyboard input UI when the back button is pressed
-            if (KeyboardInput.IsVisible)
-                KeyboardInput.Cancel(null);
-            else
-                _backPressed = true;
+        //private void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e)
+        //{
+        //    // We need to manually hide the keyboard input UI when the back button is pressed
+        //    if (KeyboardInput.IsVisible)
+        //        KeyboardInput.Cancel(null);
+        //    else
+        //        _backPressed = true;
 
-            e.Handled = true;
-        }
+        //    e.Handled = true;
+        //}
 
         private void UpdateBackButton()
         {

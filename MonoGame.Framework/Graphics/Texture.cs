@@ -10,10 +10,10 @@ namespace Microsoft.Xna.Framework.Graphics
 {
 	public abstract partial class Texture : GraphicsResource
 	{
-		internal SurfaceFormat _format;
-		internal int _levelCount;
+		public SurfaceFormat _format;
+		public int _levelCount;
 
-        private readonly int _sortingKey = Interlocked.Increment(ref _lastSortingKey);
+        public readonly int _sortingKey = Interlocked.Increment(ref _lastSortingKey);
         private static int _lastSortingKey;
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <para>The value is an implementation detail and may change between application launches or MonoGame versions.
         /// It is only guaranteed to stay consistent during application lifetime.</para>
         /// </remarks>
-        internal int SortingKey
+        public int SortingKey
         {
             get { return _sortingKey; }
         }
@@ -39,7 +39,7 @@ namespace Microsoft.Xna.Framework.Graphics
 			get { return _levelCount; }
 		}
 
-        internal static int CalculateMipLevels(int width, int height = 0, int depth = 0)
+        public static int CalculateMipLevels(int width, int height = 0, int depth = 0)
         {
             int levels = 1;
             int size = Math.Max(Math.Max(width, height), depth);
@@ -51,7 +51,7 @@ namespace Microsoft.Xna.Framework.Graphics
             return levels;
         }
 
-        internal static void GetSizeForLevel(int width, int height, int level, out int w, out int h)
+        public static void GetSizeForLevel(int width, int height, int level, out int w, out int h)
         {
             w = width;
             h = height;
@@ -67,7 +67,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 h = 1;
         }
 
-        internal static void GetSizeForLevel(int width, int height, int depth, int level, out int w, out int h, out int d)
+        public static void GetSizeForLevel(int width, int height, int depth, int level, out int w, out int h, out int d)
         {
             w = width;
             h = height;
@@ -87,7 +87,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 d = 1;
         }
 
-        internal int GetPitch(int width)
+        public int GetPitch(int width)
         {
             Debug.Assert(width > 0, "The width is negative!");
 
@@ -122,7 +122,7 @@ namespace Microsoft.Xna.Framework.Graphics
             return pitch;
         }
 
-        internal protected override void GraphicsDeviceResetting()
+        public override void GraphicsDeviceResetting()
         {
             PlatformGraphicsDeviceResetting();
         }

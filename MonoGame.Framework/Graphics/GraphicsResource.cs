@@ -54,7 +54,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         private WeakReference _selfReference;
 
-        internal GraphicsResource()
+        public GraphicsResource()
         {
             
         }
@@ -71,7 +71,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// Warning: This may be called after a call to Dispose() up until
         /// the resource is garbage collected.
         /// </summary>
-        internal protected virtual void GraphicsDeviceResetting()
+        public virtual void GraphicsDeviceResetting()
         {
 
         }
@@ -125,7 +125,7 @@ namespace Microsoft.Xna.Framework.Graphics
 				return graphicsDevice;
 			}
 
-            internal set
+            set
             {
                 Debug.Assert(value != null);
 

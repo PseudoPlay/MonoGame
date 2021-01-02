@@ -9,14 +9,14 @@ namespace Microsoft.Xna.Framework.Graphics
     /// </summary>
     public struct GraphicsMetrics
     {
-        internal long _clearCount;
-        internal long _drawCount;
-        internal long _pixelShaderCount;
-        internal long _primitiveCount;
-        internal long _spriteCount;
-        internal long _targetCount;
-        internal long _textureCount;
-        internal long _vertexShaderCount;
+        public long _clearCount;
+        public long _drawCount;
+        public long _pixelShaderCount;
+        public long _primitiveCount;
+        public long _spriteCount;
+        public long _targetCount;
+        public long _textureCount;
+        public long _vertexShaderCount;
 
         /// <summary>
         /// Number of times Clear was called.

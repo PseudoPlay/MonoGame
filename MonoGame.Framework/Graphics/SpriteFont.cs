@@ -28,7 +28,7 @@ namespace Microsoft.Xna.Framework.Graphics
         private int _defaultGlyphIndex = -1;
 		
 		private readonly Texture2D _texture;
-
+        public object defaultMaterial; // convienience
 		/// <summary>
 		/// All the glyphs in this SpriteFont.
 		/// </summary>
@@ -198,7 +198,7 @@ namespace Microsoft.Xna.Framework.Graphics
 			return size;
 		}
 
-		internal unsafe void MeasureString(ref CharacterSource text, out Vector2 size)
+		public  unsafe void MeasureString(ref CharacterSource text, out Vector2 size)
 		{
 			if (text.Length == 0)
             {
@@ -260,7 +260,7 @@ namespace Microsoft.Xna.Framework.Graphics
             size.Y = offset.Y + finalLineHeight;
 		}
         
-        internal unsafe bool TryGetGlyphIndex(char c, out int index)
+        public unsafe bool TryGetGlyphIndex(char c, out int index)
         {
             fixed (CharacterRegion* pRegions = _regions)
             {
@@ -299,7 +299,7 @@ namespace Microsoft.Xna.Framework.Graphics
             return true;
         }
 
-        internal int GetGlyphIndexOrDefault(char c)
+        public int GetGlyphIndexOrDefault(char c)
         {
             int glyphIdx;
             if (!TryGetGlyphIndex(c, out glyphIdx))
@@ -313,7 +313,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 return glyphIdx;
         }
         
-        internal struct CharacterSource 
+        public struct CharacterSource 
         {
 			private readonly string _string;
 			private readonly StringBuilder _builder;

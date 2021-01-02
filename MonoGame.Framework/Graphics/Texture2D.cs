@@ -19,12 +19,12 @@ namespace Microsoft.Xna.Framework.Graphics
             SwapChainRenderTarget,
         }
 
-		internal int width;
-		internal int height;
-        internal int ArraySize;
+        public int width;
+        public int height;
+        public int ArraySize;
                 
-        internal float TexelWidth { get; private set; }
-        internal float TexelHeight { get; private set; }
+        public float TexelWidth { get; private set; }
+        public float TexelHeight { get; private set; }
 
         /// <summary>
         /// Gets the dimensions of the texture

@@ -85,7 +85,7 @@ namespace Microsoft.Xna.Framework.Graphics
             RenderTargetUsage = usage;
 		}
 
-        protected internal override void GraphicsDeviceResetting()
+        public override void GraphicsDeviceResetting()
         {
             PlatformGraphicsDeviceResetting();
             base.GraphicsDeviceResetting();

@@ -5,20 +5,21 @@
     <!-- TODO: NET45 is here for reflection API (Utilities\ReflectionHelpers), but does not make sense semantically -->
     <DefineConstants>WINDOWS_UAP;DIRECTX11_1;NET45;STBSHARP_INTERNAL</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TargetPlatformVersion>10.0.18362.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
     <Description>The MonoGame runtime for UWP (Universal Windows Platform) which supports Windows 10 and Xbox One.</Description>
     <PackageTags>monogame;.net core;core;.net standard;standard;uwp</PackageTags>
     <PackageId>MonoGame.Framework.WindowsUniversal</PackageId>
-    <SharpDXVersion>4.0.1</SharpDXVersion>
+    <SharpDXVersion>4.2.0</SharpDXVersion>
     <AppendTargetFrameworkToOutputPath>False</AppendTargetFrameworkToOutputPath>
+    <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+    <AutoGenerateBindingRedirects></AutoGenerateBindingRedirects>
   </PropertyGroup>
 
-  <ItemGroup>
-    <SDKReference Include="WindowsMobile, Version=10.0.18362.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>obj\WindowsUniversal\Debug\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="bin\**\*" />
@@ -62,8 +63,15 @@
     <Compile Include="Platform\WindowsUniversal\XamlGame.cs" />
     <Compile Include="Platform\WindowsUniversal\InputEvents.cs" />
 
-    <Compile Include="..\ThirdParty\StbImageSharp\src\**\*.cs" LinkBase="Utilities\StbImageSharp"/>
-    <Compile Include="..\ThirdParty\StbImageWriteSharp\src\**\*.cs" LinkBase="Utilities\StbImageWriteSharp"/>
+    <Compile Include="..\ThirdParty\StbImageSharp\src\**\*.cs" LinkBase="Utilities\StbImageSharp" />
+    <Compile Include="..\ThirdParty\StbImageWriteSharp\src\**\*.cs" LinkBase="Utilities\StbImageWriteSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="MonoGame.Framework.Android.targets" />
+    <None Remove="MonoGame.Framework.DesktopGL.targets" />
+    <None Remove="MonoGame.Framework.iOS.targets" />
+    <None Remove="MonoGame.Framework.WindowsDX.targets" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,12 +79,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SharpDX" Version="$(SharpDXVersion)" />
-    <PackageReference Include="SharpDX.Direct2D1" Version="$(SharpDXVersion)" />
-    <PackageReference Include="SharpDX.Direct3D11" Version="$(SharpDXVersion)" />
-    <PackageReference Include="SharpDX.DXGI" Version="$(SharpDXVersion)" />
-    <PackageReference Include="SharpDX.MediaFoundation" Version="$(SharpDXVersion)" />
-    <PackageReference Include="SharpDX.XAudio2" Version="$(SharpDXVersion)" />
+    <PackageReference Include="SharpDX" Version="4.2.0" />
+    <PackageReference Include="SharpDX.Direct2D1" Version="4.2.0" />
+    <PackageReference Include="SharpDX.Direct3D11" Version="4.2.0" />
+    <PackageReference Include="SharpDX.DXGI" Version="4.2.0" />
+    <PackageReference Include="SharpDX.MediaFoundation" Version="4.2.0" />
+    <PackageReference Include="SharpDX.XAudio2" Version="4.2.0" />
   </ItemGroup>
 
   <Import Project="Platform\DirectX.targets" />

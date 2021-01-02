@@ -116,7 +116,7 @@ namespace Microsoft.Xna.Framework.Graphics
             PlatformConstruct(Stage, shaderBytecode);
         }
 
-        internal protected override void GraphicsDeviceResetting()
+        public override void GraphicsDeviceResetting()
         {
             PlatformGraphicsDeviceResetting();
         }

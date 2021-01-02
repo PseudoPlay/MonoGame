@@ -27,7 +27,7 @@ namespace Microsoft.Xna.Framework.Graphics
             GenerateIfRequired();
         }
 
-        private void PlatformGraphicsDeviceResetting()
+        protected void PlatformGraphicsDeviceResetting()
         {
             SharpDX.Utilities.Dispose(ref _buffer);
         }
