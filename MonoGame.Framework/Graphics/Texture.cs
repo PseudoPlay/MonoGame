@@ -3,12 +3,13 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	public abstract partial class Texture : GraphicsResource
+	public abstract partial class Texture : GraphicsResource , IEqualityComparer<Texture>
 	{
 		public SurfaceFormat _format;
 		public int _levelCount;
@@ -125,6 +126,16 @@ namespace Microsoft.Xna.Framework.Graphics
         public override void GraphicsDeviceResetting()
         {
             PlatformGraphicsDeviceResetting();
+        }
+
+        bool IEqualityComparer<Texture>.Equals(Texture x, Texture y)
+        {
+            return x._sortingKey == y._sortingKey;
+        }
+
+        int IEqualityComparer<Texture>.GetHashCode(Texture obj)
+        {
+            return obj._sortingKey;
         }
     }
 }

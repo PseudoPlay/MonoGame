@@ -7,7 +7,7 @@ using SharpDX.Direct3D11;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-    internal partial class Shader
+    public partial class Shader
     {
         private VertexShader _vertexShader;
         private PixelShader _pixelShader;

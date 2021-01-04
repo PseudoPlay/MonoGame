@@ -3,15 +3,20 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
+
 using MonoGame.Framework.Utilities;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	public class Effect : GraphicsResource
+	public class Effect : GraphicsResource, IEqualityComparer<Effect>
     {
-      
+
+        public readonly int _sortingKey = Interlocked.Increment(ref _lastSortingKey);
+        private static int _lastSortingKey;
 
         struct MGFXHeader 
         {
@@ -450,6 +455,16 @@ namespace Microsoft.Xna.Framework.Graphics
 
 			return new EffectParameterCollection(parameters);
 		}
+
+        bool IEqualityComparer<Effect>.Equals(Effect x, Effect y)
+        {
+            return x._sortingKey == y._sortingKey;
+        }
+
+        int IEqualityComparer<Effect>.GetHashCode(Effect obj)
+        {
+            return obj._sortingKey;
+        }
 
         #endregion // Effect File Reader
     }

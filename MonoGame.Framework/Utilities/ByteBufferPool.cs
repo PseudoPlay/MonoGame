@@ -2,7 +2,7 @@
 
 namespace MonoGame.Framework.Utilities
 {
-    internal class ByteBufferPool
+    public class ByteBufferPool
     {
         private readonly int _minBufferSize;
         private readonly int _maxBuffers;

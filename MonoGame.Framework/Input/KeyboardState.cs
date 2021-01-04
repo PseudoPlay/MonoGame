@@ -11,8 +11,8 @@ namespace Microsoft.Xna.Framework.Input
     /// </summary>
 	public struct KeyboardState
     {
-        private const byte CapsLockModifier = 1;
-        private const byte NumLockModifier = 2;
+        public const byte CapsLockModifier = 1;
+        public const byte NumLockModifier = 2;
 
         // Used for the common situation where GetPressedKeys will return an empty array
         private static Keys[] empty = new Keys[0];
@@ -20,8 +20,8 @@ namespace Microsoft.Xna.Framework.Input
         #region Key Data
 
         // Array of 256 bits:
-        private uint _keys0, _keys1, _keys2, _keys3, _keys4, _keys5, _keys6, _keys7;
-        private byte _modifiers;
+        public uint _keys0, _keys1, _keys2, _keys3, _keys4, _keys5, _keys6, _keys7;
+        public byte _modifiers;
 
         bool InternalGetKey(Keys key)
         {

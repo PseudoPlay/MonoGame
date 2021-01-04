@@ -11,7 +11,7 @@ namespace Microsoft.Xna.Framework.Graphics
     // TODO: We should convert the types below 
     // into the start of a Shader reflection API.
 
-    internal enum SamplerType
+    public enum SamplerType
     {
         Sampler2D = 0,
         SamplerCube = 1,
@@ -19,7 +19,7 @@ namespace Microsoft.Xna.Framework.Graphics
         Sampler1D = 3,
     }
 
-    internal struct SamplerInfo
+    public struct SamplerInfo
     {
         public SamplerType type;
         public int textureSlot;
@@ -31,7 +31,7 @@ namespace Microsoft.Xna.Framework.Graphics
         public int parameter;
     }
 
-    internal struct VertexAttribute
+    public struct VertexAttribute
     {
         public VertexElementUsage usage;
         public int index;
@@ -39,7 +39,7 @@ namespace Microsoft.Xna.Framework.Graphics
         public int location;
     }
 
-    internal partial class Shader : GraphicsResource
+    public partial class Shader : GraphicsResource
 	{
         /// <summary>
         /// Returns the platform specific shader profile identifier.

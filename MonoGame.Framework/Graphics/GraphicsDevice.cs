@@ -963,7 +963,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-        private void SetIndexBuffer(IndexBuffer indexBuffer)
+        public void SetIndexBuffer(IndexBuffer indexBuffer)
         {
             if (_indexBuffer == indexBuffer)
                 return;
@@ -974,7 +974,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public IndexBuffer Indices { set { SetIndexBuffer(value); } get { return _indexBuffer; } }
 
-        internal Shader VertexShader
+        public Shader VertexShader
         {
             get { return _vertexShader; }
 
@@ -989,7 +989,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-        internal Shader PixelShader
+        public Shader PixelShader
         {
             get { return _pixelShader; }
 
@@ -1004,7 +1004,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-        internal void SetConstantBuffer(ShaderStage stage, int slot, ConstantBuffer buffer)
+        public void SetConstantBuffer(ShaderStage stage, int slot, ConstantBuffer buffer)
         {
             if (stage == ShaderStage.Vertex)
                 _vertexConstantBuffers[slot] = buffer;

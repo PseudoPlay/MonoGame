@@ -6,7 +6,7 @@ using System;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-    internal partial class ConstantBuffer : GraphicsResource
+    public partial class ConstantBuffer : GraphicsResource
     {
         private readonly byte[] _buffer;
 
@@ -56,12 +56,12 @@ namespace Microsoft.Xna.Framework.Graphics
             PlatformInitialize();
         }
 
-        internal void Clear()
+        public void Clear()
         {
             PlatformClear();
         }
 
-        private void SetData(int offset, int rows, int columns, object data)
+        public void SetData(int offset, int rows, int columns, object data)
         {
             // Shader registers are always 4 bytes and all the
             // incoming data objects should be 4 bytes per element.
@@ -100,7 +100,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-        private int SetParameter(int offset, EffectParameter param)
+        public int SetParameter(int offset, EffectParameter param)
         {
             const int elementSize = 4;
             const int rowSize = elementSize * 4;

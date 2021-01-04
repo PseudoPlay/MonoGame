@@ -32,7 +32,7 @@ namespace Microsoft.Xna.Framework.Content
 		private static object ContentManagerLock = new object();
         private static List<WeakReference> ContentManagers = new List<WeakReference>();
 
-        internal static readonly ByteBufferPool ScratchBufferPool = new ByteBufferPool(1024 * 1024, Environment.ProcessorCount);
+        public static readonly ByteBufferPool ScratchBufferPool = new ByteBufferPool(1024 * 1024, Environment.ProcessorCount);
 
         private static readonly List<char> targetPlatformIdentifiers = new List<char>()
         {
@@ -257,8 +257,8 @@ namespace Microsoft.Xna.Framework.Content
             loadedAssets[key] = result;
             return result;
 		}
-		
-		protected virtual Stream OpenStream(string assetName)
+
+        public virtual Stream OpenStream(string assetName)
 		{
 			Stream stream;
 			try
@@ -400,12 +400,12 @@ namespace Microsoft.Xna.Framework.Content
         /// <summary>
         /// Virtual property to allow a derived ContentManager to have it's assets reloaded
         /// </summary>
-        protected virtual Dictionary<string, object> LoadedAssets
+        public virtual Dictionary<string, object> LoadedAssets
         {
             get { return loadedAssets; }
         }
 
-		protected virtual void ReloadGraphicsAssets()
+        public virtual void ReloadGraphicsAssets()
         {
             foreach (var asset in LoadedAssets)
             {
@@ -420,7 +420,7 @@ namespace Microsoft.Xna.Framework.Content
             }
         }
 
-        protected virtual void ReloadAsset<T>(string originalAssetName, T currentAsset)
+        public virtual void ReloadAsset<T>(string originalAssetName, T currentAsset)
         {
 			string assetName = originalAssetName;
 			if (string.IsNullOrEmpty(assetName))
@@ -466,7 +466,7 @@ namespace Microsoft.Xna.Framework.Content
 			}
 		}
 
-        internal string RootDirectoryFullPath
+        public string RootDirectoryFullPath
         {
             get
             {

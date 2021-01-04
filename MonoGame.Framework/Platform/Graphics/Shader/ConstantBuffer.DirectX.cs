@@ -5,11 +5,11 @@
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-    internal partial class ConstantBuffer : GraphicsResource
+    public partial class ConstantBuffer : GraphicsResource
     {
-        private SharpDX.Direct3D11.Buffer _cbuffer;
+        public SharpDX.Direct3D11.Buffer _cbuffer;
 
-        private void PlatformInitialize()
+        public void PlatformInitialize()
         {
             // Allocate the hardware constant buffer.
             var desc = new SharpDX.Direct3D11.BufferDescription();
@@ -21,13 +21,13 @@ namespace Microsoft.Xna.Framework.Graphics
                 _cbuffer = new SharpDX.Direct3D11.Buffer(GraphicsDevice._d3dDevice, desc);
         }
 
-        private void PlatformClear()
+        public void PlatformClear()
         {
             SharpDX.Utilities.Dispose(ref _cbuffer);
             _dirty = true;
         }
 
-        internal void PlatformApply(GraphicsDevice device, ShaderStage stage, int slot)
+        public void PlatformApply(GraphicsDevice device, ShaderStage stage, int slot)
         {
             if (_cbuffer == null)
                 PlatformInitialize();
