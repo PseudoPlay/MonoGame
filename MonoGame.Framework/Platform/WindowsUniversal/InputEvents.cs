@@ -5,8 +5,10 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
+
 using Windows.Devices.Input;
 using Windows.Graphics.Display;
 using Windows.System.Threading;
@@ -68,46 +70,46 @@ namespace Microsoft.Xna.Framework
             DisplayInformation.GetForCurrentView().DpiChanged += InputEvents_DpiChanged;
             _currentDipFactor = DisplayInformation.GetForCurrentView().LogicalDpi / 96.0f;
 
-            if (inputElement is SwapChainPanel || inputElement is SwapChainBackgroundPanel)
-            {
-                // Create a thread to precess input events.
-                var workItemHandler = new WorkItemHandler((action) =>
-                {
-                    var inputDevices = CoreInputDeviceTypes.Mouse | CoreInputDeviceTypes.Pen | CoreInputDeviceTypes.Touch;
+            //if (inputElement is SwapChainPanel || inputElement is SwapChainBackgroundPanel)
+            //{
+            //    // Create a thread to precess input events.
+            //    var workItemHandler = new WorkItemHandler((action) =>
+            //    {
+            //        var inputDevices = CoreInputDeviceTypes.Mouse | CoreInputDeviceTypes.Pen | CoreInputDeviceTypes.Touch;
 
-                    if (inputElement is SwapChainBackgroundPanel)
-                        _coreIndependentInputSource = ((SwapChainBackgroundPanel)inputElement).CreateCoreIndependentInputSource(inputDevices);
-                    else
-                        _coreIndependentInputSource = ((SwapChainPanel)inputElement).CreateCoreIndependentInputSource(inputDevices);
+            //        if (inputElement is SwapChainBackgroundPanel)
+            //            _coreIndependentInputSource = ((SwapChainBackgroundPanel)inputElement).CreateCoreIndependentInputSource(inputDevices);
+            //        else
+            //            _coreIndependentInputSource = ((SwapChainPanel)inputElement).CreateCoreIndependentInputSource(inputDevices);
 
-                    _coreIndependentInputSource.PointerPressed += CoreWindow_PointerPressed;
-                    _coreIndependentInputSource.PointerMoved += CoreWindow_PointerMoved;
-                    _coreIndependentInputSource.PointerReleased += CoreWindow_PointerReleased;
-                    _coreIndependentInputSource.PointerWheelChanged += CoreWindow_PointerWheelChanged;
+            //        _coreIndependentInputSource.PointerPressed += CoreWindow_PointerPressed;
+            //        _coreIndependentInputSource.PointerMoved += CoreWindow_PointerMoved;
+            //        _coreIndependentInputSource.PointerReleased += CoreWindow_PointerReleased;
+            //        _coreIndependentInputSource.PointerWheelChanged += CoreWindow_PointerWheelChanged;
 
-                    _coreIndependentInputSource.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
-                });
-                var inputWorker = ThreadPool.RunAsync(workItemHandler, WorkItemPriority.High, WorkItemOptions.TimeSliced);
-            }
+            //        _coreIndependentInputSource.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
+            //    });
+            //    var inputWorker = ThreadPool.RunAsync(workItemHandler, WorkItemPriority.High, WorkItemOptions.TimeSliced);
+            //}
 
-            if (inputElement != null)
-            {
-                // If we have an input UIElement then we bind input events
-                // to it else we'll get events for overlapping XAML controls.
-                inputElement.PointerPressed += UIElement_PointerPressed;
-                inputElement.PointerReleased += UIElement_PointerReleased;
-                inputElement.PointerCanceled += UIElement_PointerReleased;
-                inputElement.PointerMoved += UIElement_PointerMoved;
-                inputElement.PointerWheelChanged += UIElement_PointerWheelChanged;
-            }
-            else
-            {
-                // If we only have a CoreWindow then use it for input events.
-                window.PointerPressed += CoreWindow_PointerPressed;
-                window.PointerReleased += CoreWindow_PointerReleased;
-                window.PointerMoved += CoreWindow_PointerMoved;
-                window.PointerWheelChanged += CoreWindow_PointerWheelChanged;
-            }
+            //if (inputElement != null)
+            //{
+            //    // If we have an input UIElement then we bind input events
+            //    // to it else we'll get events for overlapping XAML controls.
+            //    inputElement.PointerPressed += UIElement_PointerPressed;
+            //    inputElement.PointerReleased += UIElement_PointerReleased;
+            //    inputElement.PointerCanceled += UIElement_PointerReleased;
+            //    inputElement.PointerMoved += UIElement_PointerMoved;
+            //    inputElement.PointerWheelChanged += UIElement_PointerWheelChanged;
+            //}
+            //else
+            //{
+            //    // If we only have a CoreWindow then use it for input events.
+            //    window.PointerPressed += CoreWindow_PointerPressed;
+            //    window.PointerReleased += CoreWindow_PointerReleased;
+            //    window.PointerMoved += CoreWindow_PointerMoved;
+            //    window.PointerWheelChanged += CoreWindow_PointerWheelChanged;
+            //}
         }
 
         private void InputEvents_DpiChanged(DisplayInformation sender, object args)
@@ -252,7 +254,7 @@ namespace Microsoft.Xna.Framework
             else
                 verticalScrollDelta = state.MouseWheelDelta;
 
-            Mouse.PrimaryWindow.MouseState = new MouseState(x, y, 
+            Mouse.PrimaryWindow.MouseState = new MouseState(x, y,
                 Mouse.PrimaryWindow.MouseState.ScrollWheelValue + verticalScrollDelta,
                 state.IsLeftButtonPressed ? ButtonState.Pressed : ButtonState.Released,
                 state.IsMiddleButtonPressed ? ButtonState.Pressed : ButtonState.Released,

@@ -48,7 +48,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public EffectTechnique CurrentTechnique { get; set; }
   
-        internal ConstantBuffer[] ConstantBuffers { get; private set; }
+        public  ConstantBuffer[] ConstantBuffers { get; private set; }
 
         private Shader[] _shaders;
 
@@ -169,7 +169,9 @@ namespace Microsoft.Xna.Framework.Graphics
             // Make a copy of the immutable constant buffers.
             ConstantBuffers = new ConstantBuffer[cloneSource.ConstantBuffers.Length];
             for (var i = 0; i < cloneSource.ConstantBuffers.Length; i++)
+            {
                 ConstantBuffers[i] = new ConstantBuffer(cloneSource.ConstantBuffers[i]);
+            }
 
             // Find and set the current technique.
             for (var i = 0; i < cloneSource.Techniques.Count; i++)
@@ -262,7 +264,7 @@ namespace Microsoft.Xna.Framework.Graphics
                     offsets[i] = (int)reader.ReadUInt16();
                 }
 
-                ConstantBuffers[c] = new ConstantBuffer(GraphicsDevice,
+                ConstantBuffers[c] = ConstantBuffer.Get(GraphicsDevice,
                                                 sizeInBytes,
                                                 parameters,
                                                 offsets,

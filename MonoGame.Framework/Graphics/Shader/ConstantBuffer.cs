@@ -3,12 +3,15 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Collections.Concurrent;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
     public partial class ConstantBuffer : GraphicsResource
     {
-        private readonly byte[] _buffer;
+        public const int customConstantBuffer = 9;
+
+        public readonly byte[] _buffer;
 
         private readonly int[] _parameters;
 
@@ -38,6 +41,17 @@ namespace Microsoft.Xna.Framework.Graphics
             PlatformInitialize();
         }
 
+        public static ConstantBuffer Get(GraphicsDevice device,
+                              int sizeInBytes,
+                              int[] parameterIndexes,
+                              int[] parameterOffsets,
+                              string name)
+        {
+         
+            ConstantBuffer rv = new ConstantBuffer(device, sizeInBytes, parameterIndexes, parameterOffsets, name);
+            return rv;
+        }
+
         public ConstantBuffer(GraphicsDevice device,
                               int sizeInBytes,
                               int[] parameterIndexes,
@@ -55,6 +69,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
             PlatformInitialize();
         }
+
 
         public void Clear()
         {
