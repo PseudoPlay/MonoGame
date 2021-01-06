@@ -3,11 +3,13 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Collections.Generic;
+
 using MonoGame.Framework.Utilities;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-	public class DynamicVertexBuffer : VertexBuffer
+    public class DynamicVertexBuffer : VertexBuffer
     {
         /// <summary>
         /// Special offset used internally by GraphicsDevice.DrawUserXXX() methods.
@@ -20,8 +22,8 @@ namespace Microsoft.Xna.Framework.Graphics
             : base(graphicsDevice, vertexDeclaration, vertexCount, bufferUsage, true)
         {
         }
-		
-		public DynamicVertexBuffer(GraphicsDevice graphicsDevice, Type type, int vertexCount, BufferUsage bufferUsage)
+
+        public DynamicVertexBuffer(GraphicsDevice graphicsDevice, Type type, int vertexCount, BufferUsage bufferUsage)
             : base(graphicsDevice, VertexDeclaration.FromType(type), vertexCount, bufferUsage, true)
         {
         }
@@ -35,6 +37,17 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             var elementSizeInBytes = ReflectionHelpers.SizeOf<T>.Get();
             base.SetDataInternal<T>(0, data, startIndex, elementCount, elementSizeInBytes, options);
+        }
+
+        // Copy Gather operation
+        public void SetData(int offsetInBytes, List<SpriteVertices> data, SetDataOptions options)
+        {
+            base.SetDataInternal(offsetInBytes, data, options);
+        }
+
+        public void SetData(List<SpriteVertices> data, SetDataOptions options)
+        {
+            base.SetDataInternal(0, data, options);
         }
     }
 }

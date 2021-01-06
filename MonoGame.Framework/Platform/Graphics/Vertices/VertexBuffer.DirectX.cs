@@ -3,6 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -141,7 +142,7 @@ namespace Microsoft.Xna.Framework.Graphics
                 {
                     var dataBox = d3dContext.MapSubresource(_buffer, 0, mode, SharpDX.Direct3D11.MapFlags.None);
                     if (vertexStride == elementSizeInBytes)
-					{
+                    {
                         SharpDX.Utilities.Write(dataBox.DataPointer + offsetInBytes, data, startIndex, elementCount);
                     }
                     else
@@ -210,7 +211,41 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
             }
         }
+        // Gather operation, each other is a colllection of vertices in contiguous memory (i.e 4 verts per sprite)
+        private unsafe void PlatformSetDataInternal(int offsetInBytes, List<SpriteVertices> data, SetDataOptions options)
+        {
+            GenerateIfRequired();
+            var elementCount = data.Count;
+            if (_isDynamic)
+            {
+                // We assume discard by default.
+                var mode = SharpDX.Direct3D11.MapMode.WriteDiscard;
+                if ((options & SetDataOptions.NoOverwrite) == SetDataOptions.NoOverwrite)
+                    mode = SharpDX.Direct3D11.MapMode.WriteNoOverwrite;
 
+                var d3dContext = GraphicsDevice._d3dContext;
+                lock (d3dContext)
+                {
+                    var dataBox = d3dContext.MapSubresource(_buffer, 0, mode, SharpDX.Direct3D11.MapFlags.None);
+                    VertexPositionColorTexture* dest = (VertexPositionColorTexture*)(void*)(dataBox.DataPointer + offsetInBytes);
+
+                    for (int i = 0; i < elementCount; i++)
+                    {
+                        var source = data[i];
+                        dest[i * 4 + 0] = source.vertexTL;
+                        dest[i * 4 + 1] = source.vertexTR;
+                        dest[i * 4 + 2] = source.vertexBL;
+                        dest[i * 4 + 3] = source.vertexBR;
+
+                    }
+                    d3dContext.UnmapSubresource(_buffer, 0);
+                }
+            }
+            else
+            {
+                throw new Exception("Not Dynamic");
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
