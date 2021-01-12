@@ -12,6 +12,8 @@ namespace Microsoft.Xna
         public VertexPositionColorTexture vertexTR;
         public VertexPositionColorTexture vertexBL;
         public VertexPositionColorTexture vertexBR;
+
+        public static IndexBuffer indexBuffer;
     }
 
 }

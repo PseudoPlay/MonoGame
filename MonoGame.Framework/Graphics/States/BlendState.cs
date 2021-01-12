@@ -190,6 +190,7 @@ namespace Microsoft.Xna.Framework.Graphics
         public static readonly BlendState AlphaBlend;
         public static readonly BlendState NonPremultiplied;
         public static readonly BlendState Opaque;
+        public static readonly BlendState AlphaBlendFactor;
 
         public BlendState()
         {
@@ -236,7 +237,8 @@ namespace Microsoft.Xna.Framework.Graphics
             AlphaBlend = new BlendState("BlendState.AlphaBlend", Blend.One, Blend.InverseSourceAlpha);
             NonPremultiplied = new BlendState("BlendState.NonPremultiplied", Blend.SourceAlpha, Blend.InverseSourceAlpha);
             Opaque = new BlendState("BlendState.Opaque", Blend.One, Blend.Zero);
-		}
+            AlphaBlendFactor = new BlendState("BlendState.AlphaBlendFactor", Blend.BlendFactor, Blend.InverseSourceAlpha);
+        }
 
 	    internal BlendState Clone()
 	    {

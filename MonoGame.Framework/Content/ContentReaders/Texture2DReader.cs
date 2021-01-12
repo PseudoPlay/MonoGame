@@ -16,6 +16,28 @@ namespace Microsoft.Xna.Framework.Content
 		{
 			// Do nothing
 		}
+        static SurfaceFormat SRGBConvert(SurfaceFormat format)
+        {
+            if (ContentManager.wantSRGB<=0)
+                return format;
+            switch (format)
+            {
+                case SurfaceFormat.Color:
+                    return SurfaceFormat.ColorSRgb;
+                case SurfaceFormat.Bgra32:
+                    return SurfaceFormat.Bgra32SRgb;
+                case SurfaceFormat.Bgr32:
+                    return SurfaceFormat.Bgr32SRgb;
+                case SurfaceFormat.Dxt1:
+                    return SurfaceFormat.Dxt1SRgb;
+                case SurfaceFormat.Dxt3:
+                    return SurfaceFormat.Dxt3SRgb;
+                case SurfaceFormat.Dxt5:
+                    return SurfaceFormat.Dxt5SRgb;
+
+            }
+            return format;
+        }
 
         protected internal override Texture2D Read(ContentReader reader, Texture2D existingInstance)
 		{
@@ -64,7 +86,7 @@ namespace Microsoft.Xna.Framework.Content
 					break;
 			}
 			
-            texture = existingInstance ?? new Texture2D(reader.GetGraphicsDevice(), width, height, levelCountOutput > 1, convertedFormat);
+            texture = existingInstance ?? new Texture2D(reader.GetGraphicsDevice(), width, height, levelCountOutput > 1, SRGBConvert(convertedFormat));
 #if OPENGL
             Threading.BlockOnUIThread(() =>
             {

@@ -12,12 +12,13 @@ namespace Microsoft.Xna.Framework.Graphics
             _passes = passes;
         }
 
-        internal EffectPassCollection Clone(Effect effect)
+        internal EffectPassCollection Clone(Effect effect,EffectTechnique technique)
         {
             var passes = new EffectPass[_passes.Length];
             for (var i = 0; i < _passes.Length; i++)
-                passes[i] = new EffectPass(effect, _passes[i]);
-
+            {
+                passes[i] = new EffectPass(effect, _passes[i]) { technique = technique };
+            }
             return new EffectPassCollection(passes);
         }
 

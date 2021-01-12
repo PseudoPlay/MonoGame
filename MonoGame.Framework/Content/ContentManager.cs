@@ -22,6 +22,7 @@ namespace Microsoft.Xna.Framework.Content
 	{
         const byte ContentCompressedLzx = 0x80;
         const byte ContentCompressedLz4 = 0x40;
+        public static int wantSRGB;
 
 		private string _rootDirectory = string.Empty;
 		private IServiceProvider serviceProvider;

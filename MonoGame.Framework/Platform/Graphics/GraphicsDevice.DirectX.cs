@@ -395,15 +395,17 @@ namespace Microsoft.Xna.Framework.Graphics
 
             // Counter act the composition scale of the render target as 
             // we already handle this in the platform window code. 
-            if (PresentationParameters.SwapChainPanel != null)
+            if (PresentationParameters.SwapChainPanel != null )
             {
                 var asyncResult = PresentationParameters.SwapChainPanel.Dispatcher.RunIdleAsync((e) =>
                 {
-                    var inverseScale = new RawMatrix3x2();
-                    inverseScale.M11 = 1.0f / PresentationParameters.SwapChainPanel.CompositionScaleX;
-                    inverseScale.M22 = 1.0f / PresentationParameters.SwapChainPanel.CompositionScaleY;
-                    using (var swapChain2 = _swapChain.QueryInterface<SwapChain2>())
-                        swapChain2.MatrixTransform = inverseScale;
+                  
+                        var inverseScale = new RawMatrix3x2();
+                        inverseScale.M11 = 1.0f / PresentationParameters.SwapChainPanel.CompositionScaleX;
+                        inverseScale.M22 = 1.0f / PresentationParameters.SwapChainPanel.CompositionScaleY;
+                        using (var swapChain2 = _swapChain.QueryInterface<SwapChain2>())
+                            swapChain2.MatrixTransform = inverseScale;
+                  
                 });
             }
 
@@ -411,8 +413,15 @@ namespace Microsoft.Xna.Framework.Graphics
             Point targetSize;
             using (var backBuffer = SharpDX.Direct3D11.Texture2D.FromSwapChain<SharpDX.Direct3D11.Texture2D>(_swapChain, 0))
             {
+                var desc = new RenderTargetViewDescription()
+                {
+                    Format = Format.B8G8R8A8_UNorm_SRgb,
+                    Dimension = RenderTargetViewDimension.Texture2D
+                    
+                };
+
                 // Create a view interface on the rendertarget to use on bind.
-                _renderTargetView = new SharpDX.Direct3D11.RenderTargetView(_d3dDevice, backBuffer);
+                _renderTargetView = new SharpDX.Direct3D11.RenderTargetView(_d3dDevice, backBuffer, desc);
 
                 // Get the rendertarget dimensions for later.
                 var backBufferDesc = backBuffer.Description;
@@ -644,9 +653,9 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 Format = format,
 #if WINRT
-                Scaling = DisplayModeScaling.Unspecified,
+                Scaling = DisplayModeScaling.Stretched,
 #else
-                Scaling = DisplayModeScaling.Unspecified,
+                Scaling = DisplayModeScaling.Stretched,
 #endif
                 Width = PresentationParameters.BackBufferWidth,
                 Height = PresentationParameters.BackBufferHeight,
@@ -679,9 +688,9 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 Format = format,
 #if WINRT
-                Scaling = DisplayModeScaling.Unspecified,
+                Scaling = DisplayModeScaling.Stretched,
 #else
-                Scaling = DisplayModeScaling.Unspecified,
+                Scaling = DisplayModeScaling.Stretched,
 #endif
                 Width = PresentationParameters.BackBufferWidth,
                 Height = PresentationParameters.BackBufferHeight,
@@ -787,9 +796,9 @@ namespace Microsoft.Xna.Framework.Graphics
                     {
                         Format = format,
 #if WINDOWS_UAP
-                        Scaling = DisplayModeScaling.Unspecified,
+                        Scaling = DisplayModeScaling.Stretched,
 #else
-                        Scaling = DisplayModeScaling.Unspecified,
+                        Scaling = DisplayModeScaling.Stretched,
 #endif
                         Width = PresentationParameters.BackBufferWidth,
                         Height = PresentationParameters.BackBufferHeight,
@@ -1046,15 +1055,16 @@ namespace Microsoft.Xna.Framework.Graphics
                 // The first argument instructs DXGI to block until VSync, putting the application
                 // to sleep until the next VSync. This ensures we don't waste any cycles rendering
                 // frames that will never be displayed to the screen.
+                PresentParameters parameters = new PresentParameters();
                 lock (_d3dContext)
                 {
                     if (PresentationParameters.PresentationInterval == PresentInterval.Immediate)
                     {
-                        _swapChain.Present(0, PresentFlags.AllowTearing);
+                        _swapChain.Present(0, PresentFlags.AllowTearing, parameters);
                     }
                     else
                     {
-                        _swapChain.Present(1, PresentFlags.None);
+                        _swapChain.Present(1, PresentFlags.None, parameters);
                     }
                 }
             }
@@ -1545,11 +1555,12 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-        private void PlatformDrawUserIndexedPrimitives(PrimitiveType primitiveType, List<SpriteVertices> vertexData, short[] indexData, int indexOffset, int primitiveCount, VertexDeclaration vertexDeclaration)
+        private void PlatformDrawUserIndexedPrimitives(PrimitiveType primitiveType, List<SpriteVertices> vertexData, IndexBuffer indexBuffer, VertexDeclaration vertexDeclaration)
         {
-            var indexCount = GetElementCountArray(primitiveType, primitiveCount);
+            var indexCount = GetElementCountArray(primitiveType, vertexData.Count * 2);
             var startVertex = SetUserVertexBuffer(vertexData, vertexDeclaration);
-            var startIndex = SetUserIndexBuffer(indexData, indexOffset, indexCount);
+            Indices = indexBuffer;
+            var startIndex = 0;
 
             lock (_d3dContext)
             {

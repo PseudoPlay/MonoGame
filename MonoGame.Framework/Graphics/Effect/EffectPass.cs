@@ -1,11 +1,15 @@
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-    public class EffectPass
+    public class EffectPass: IEqualityComparer<EffectPass>
     {
-        private readonly Effect _effect;
+        public readonly int _sortingKey = System.Threading.Interlocked.Increment(ref _lastSortingKey);
+        private static int _lastSortingKey;
 
+        public  readonly Effect _effect;
+        public EffectTechnique technique;
 		private readonly Shader _pixelShader;
         private readonly Shader _vertexShader;
 
@@ -24,7 +28,7 @@ namespace Microsoft.Xna.Framework.Graphics
                                 BlendState blendState, 
                                 DepthStencilState depthStencilState, 
                                 RasterizerState rasterizerState,
-                                EffectAnnotationCollection annotations )
+                                EffectAnnotationCollection annotations)
         {
             Debug.Assert(effect != null, "Got a null effect!");
             Debug.Assert(annotations != null, "Got a null annotation collection!");
@@ -49,7 +53,6 @@ namespace Microsoft.Xna.Framework.Graphics
             Debug.Assert(cloneSource != null, "Got a null cloneSource!");
 
             _effect = effect;
-
             // Share all the immutable types.
             Name = cloneSource.Name;
             _blendState = cloneSource._blendState;
@@ -129,5 +132,14 @@ namespace Microsoft.Xna.Framework.Graphics
                     samplerStates[sampler.samplerSlot] = sampler.state;
             }
         }
+    bool IEqualityComparer<EffectPass>.Equals(EffectPass x, EffectPass y)
+    {
+        return x._sortingKey == y._sortingKey;
     }
+
+    int IEqualityComparer<EffectPass>.GetHashCode(EffectPass obj)
+    {
+        return obj._sortingKey;
+    }
+}
 }

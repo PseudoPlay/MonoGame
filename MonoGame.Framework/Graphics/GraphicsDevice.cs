@@ -54,6 +54,7 @@ namespace Microsoft.Xna.Framework.Graphics
         private BlendState _blendStateAlphaBlend;
         private BlendState _blendStateNonPremultiplied;
         private BlendState _blendStateOpaque;
+        public BlendState _blendStateAlphaBlendFactor;
 
         private DepthStencilState _depthStencilState;
         private DepthStencilState _actualDepthStencilState;
@@ -311,7 +312,7 @@ namespace Microsoft.Xna.Framework.Graphics
             _blendStateAlphaBlend = BlendState.AlphaBlend.Clone();
             _blendStateNonPremultiplied = BlendState.NonPremultiplied.Clone();
             _blendStateOpaque = BlendState.Opaque.Clone();
-
+            _blendStateAlphaBlendFactor = BlendState.AlphaBlendFactor.Clone();
             BlendState = BlendState.Opaque;
 
             _depthStencilStateDefault = DepthStencilState.Default.Clone();
@@ -472,6 +473,8 @@ namespace Microsoft.Xna.Framework.Graphics
                     newBlendState = _blendStateAdditive;
                 else if (ReferenceEquals(_blendState, BlendState.AlphaBlend))
                     newBlendState = _blendStateAlphaBlend;
+                else if (ReferenceEquals(_blendState, BlendState.AlphaBlendFactor))
+                    newBlendState = _blendStateAlphaBlendFactor;
                 else if (ReferenceEquals(_blendState, BlendState.NonPremultiplied))
                     newBlendState = _blendStateNonPremultiplied;
                 else if (ReferenceEquals(_blendState, BlendState.Opaque))
@@ -1225,34 +1228,63 @@ namespace Microsoft.Xna.Framework.Graphics
                 _graphicsMetrics._primitiveCount += primitiveCount;
             }
         }
-        public void DrawUserIndexedPrimitives(PrimitiveType primitiveType, List<SpriteVertices> vertexData, short[] indexData, int indexOffset, int primitiveCount, VertexDeclaration vertexDeclaration)
+        public unsafe void DrawUserSprites(List<SpriteVertices> vertexData, VertexDeclaration vertexDeclaration)
         {
             // These parameter checks are a duplicate of the checks in the int[] overload of DrawUserIndexedPrimitives.
             // Inlined here for efficiency.
+            if (SpriteVertices.indexBuffer == null || SpriteVertices.indexBuffer.IsDisposed)
+            {
+                const int numBatchItems = short.MaxValue / 4;
+                const int neededCapacity = 6 * numBatchItems;
+
+                short[] newIndex = new short[neededCapacity];
+                int start = 0;
+
+                fixed (short* indexFixedPtr = newIndex)
+                {
+                    var indexPtr = indexFixedPtr + (start * 6);
+                    for (var i = start; i < numBatchItems; i++, indexPtr += 6)
+                    {
+                        /*
+                         *  TL    TR
+                         *   0----1 0,1,2,3 = index offsets for vertex indices
+                         *   |   /| TL,TR,BL,BR are vertex references in SpriteBatchItem.
+                         *   |  / |
+                         *   | /  |
+                         *   |/   |
+                         *   2----3
+                         *  BL    BR
+                         */
+                        // Triangle 1
+                        *(indexPtr + 0) = (short)(i * 4);
+                        *(indexPtr + 1) = (short)(i * 4 + 1);
+                        *(indexPtr + 2) = (short)(i * 4 + 2);
+                        // Triangle 2
+                        *(indexPtr + 3) = (short)(i * 4 + 1);
+                        *(indexPtr + 4) = (short)(i * 4 + 3);
+                        *(indexPtr + 5) = (short)(i * 4 + 2);
+                    }
+                }
 
 
-            if (indexData == null || indexData.Length == 0)
-                throw new ArgumentNullException("indexData");
+                SpriteVertices.indexBuffer = new IndexBuffer(this, IndexElementSize.SixteenBits, neededCapacity, BufferUsage.WriteOnly);
 
-            if (indexOffset < 0 || indexOffset >= indexData.Length)
-                throw new ArgumentOutOfRangeException("indexOffset");
+                SpriteVertices.indexBuffer.SetData(newIndex);
 
-            if (primitiveCount <= 0)
-                throw new ArgumentOutOfRangeException("primitiveCount");
+            }
 
-            if (indexOffset + GetElementCountArray(primitiveType, primitiveCount) > indexData.Length)
-                throw new ArgumentOutOfRangeException("primitiveCount");
+
 
             if (vertexDeclaration == null)
                 throw new ArgumentNullException("vertexDeclaration");
 
 
-            PlatformDrawUserIndexedPrimitives(primitiveType, vertexData, indexData, indexOffset, primitiveCount, vertexDeclaration);
+            PlatformDrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertexData, SpriteVertices.indexBuffer, vertexDeclaration);
 
             unchecked
             {
                 _graphicsMetrics._drawCount++;
-                _graphicsMetrics._primitiveCount += primitiveCount;
+                _graphicsMetrics._primitiveCount += vertexData.Count * 2;
             }
         }
         /// <summary>
