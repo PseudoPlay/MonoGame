@@ -7,7 +7,7 @@ using MonoGame.OpenGL;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-    internal partial class ConstantBuffer
+    public partial class ConstantBuffer
     {
         private ShaderProgram _shaderProgram = null;
         private int _location;

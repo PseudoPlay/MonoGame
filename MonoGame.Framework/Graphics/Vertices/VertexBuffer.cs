@@ -237,5 +237,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
             PlatformSetDataInternal(offsetInBytes, data, options);
         }
+
+        
     }
 }

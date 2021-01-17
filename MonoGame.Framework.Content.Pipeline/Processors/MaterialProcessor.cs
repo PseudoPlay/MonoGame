@@ -94,7 +94,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
         public MaterialProcessor()
         {
             colorKeyColor = Color.Magenta;
-            colorKeyEnabled = true;
+            colorKeyEnabled = false;
             defaultEffect = MaterialProcessorDefaultEffect.BasicEffect;
             generateMipmaps = false;
             premultiplyTextureAlpha = true;

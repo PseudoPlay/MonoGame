@@ -110,7 +110,10 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             Threading.BlockOnUIThread(() => SetBufferData(bufferSize, elementSizeInBytes, offsetInBytes, data, startIndex, elementCount, vertexStride, options));
         }
-
+        private void PlatformSetDataInternal(int offsetInBytes, List<SpriteVertices> data, SetDataOptions options)
+        {
+            throw new NotImplementedException();
+        }
         private void SetBufferData<T>(int bufferSize, int elementSizeInBytes, int offsetInBytes, T[] data, int startIndex, int elementCount, int vertexStride, SetDataOptions options) where T : struct
         {
             GenerateIfRequired();

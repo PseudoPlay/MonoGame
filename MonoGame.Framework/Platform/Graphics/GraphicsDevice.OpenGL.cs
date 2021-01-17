@@ -1109,6 +1109,10 @@ namespace Microsoft.Xna.Framework.Graphics
 			              vertexCount);
             GraphicsExtensions.CheckGLError();
         }
+        private void PlatformDrawUserIndexedPrimitives(PrimitiveType triangleList, List<SpriteVertices> vertexData, IndexBuffer indexBuffer, VertexDeclaration vertexDeclaration)
+        {
+            throw new NotImplementedException();
+        }
 
         private void PlatformDrawUserIndexedPrimitives<T>(PrimitiveType primitiveType, T[] vertexData, int vertexOffset, int numVertices, short[] indexData, int indexOffset, int primitiveCount, VertexDeclaration vertexDeclaration) where T : struct
         {

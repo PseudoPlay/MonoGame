@@ -59,7 +59,7 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public VertexAttribute[] Attributes { get; private set; }
 
-        internal Shader(GraphicsDevice device, BinaryReader reader)
+        public Shader(GraphicsDevice device, BinaryReader reader)
         {
             GraphicsDevice = device;
 

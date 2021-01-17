@@ -7,7 +7,7 @@ using MonoGame.OpenGL;
 namespace Microsoft.Xna.Framework.Graphics
 {
 
-    internal class ShaderProgram
+    public class ShaderProgram
     {
         public readonly int Program;
 

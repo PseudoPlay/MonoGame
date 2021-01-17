@@ -1287,6 +1287,9 @@ namespace Microsoft.Xna.Framework.Graphics
                 _graphicsMetrics._primitiveCount += vertexData.Count * 2;
             }
         }
+
+       
+
         /// <summary>
         /// Draw primitives of the specified type by indexing into the given array of vertices with 32-bit indices.
         /// </summary>

@@ -15,8 +15,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Processors
         public TextureProcessor()
         {
             ColorKeyColor = new Color(255, 0, 255, 255);
-            ColorKeyEnabled = true;
+            ColorKeyEnabled = false;
             PremultiplyAlpha = true;
+            TextureFormat = TextureProcessorOutputFormat.Compressed;
         }
 
         [DefaultValueAttribute(typeof(Color), "255,0,255,255")]

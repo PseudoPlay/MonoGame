@@ -9,7 +9,7 @@ using MonoGame.OpenGL;
 
 namespace Microsoft.Xna.Framework.Graphics
 {
-    internal partial class Shader
+    public partial class Shader
     {
         // The shader handle.
         private int _shaderHandle = -1;
