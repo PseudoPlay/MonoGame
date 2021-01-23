@@ -14,8 +14,14 @@ namespace Microsoft.Xna.Framework.Graphics
 
         private readonly SamplerState _samplerStateAnisotropicClamp;
         private readonly SamplerState _samplerStateAnisotropicWrap;
+        private readonly SamplerState _samplerStateAnisotropicBorder;
         private readonly SamplerState _samplerStateLinearClamp;
         private readonly SamplerState _samplerStateLinearWrap;
+        private readonly SamplerState _samplerStateLinearBorder;
+        private readonly SamplerState _samplerStateTriLinearClamp;
+        private readonly SamplerState _samplerStateTriLinearWrap;
+        private readonly SamplerState _samplerStateTriLinearBorder;
+
         private readonly SamplerState _samplerStatePointClamp;
         private readonly SamplerState _samplerStatePointWrap;
 
@@ -29,8 +35,13 @@ namespace Microsoft.Xna.Framework.Graphics
 
             _samplerStateAnisotropicClamp = SamplerState.AnisotropicClamp.Clone();
             _samplerStateAnisotropicWrap = SamplerState.AnisotropicWrap.Clone();
+            _samplerStateAnisotropicBorder = SamplerState.AnisotropicBorder.Clone();
             _samplerStateLinearClamp = SamplerState.LinearClamp.Clone();
             _samplerStateLinearWrap = SamplerState.LinearWrap.Clone();
+            _samplerStateLinearBorder = SamplerState.LinearBorder.Clone();
+            _samplerStateTriLinearClamp = SamplerState.TriLinearClamp.Clone();
+            _samplerStateTriLinearWrap = SamplerState.TriLinearWrap.Clone();
+            _samplerStateTriLinearBorder = SamplerState.TriLinearBorder.Clone();
             _samplerStatePointClamp = SamplerState.PointClamp.Clone();
             _samplerStatePointWrap = SamplerState.PointWrap.Clone();
 
@@ -65,9 +76,19 @@ namespace Microsoft.Xna.Framework.Graphics
                     newSamplerState = _samplerStateAnisotropicClamp;
                 else if (ReferenceEquals(value, SamplerState.AnisotropicWrap))
                     newSamplerState = _samplerStateAnisotropicWrap;
+                else if (ReferenceEquals(value, SamplerState.AnisotropicBorder))
+                    newSamplerState = _samplerStateAnisotropicBorder;
                 else if (ReferenceEquals(value, SamplerState.LinearClamp))
                     newSamplerState = _samplerStateLinearClamp;
+                else if (ReferenceEquals(value, SamplerState.LinearBorder))
+                    newSamplerState = _samplerStateLinearBorder;
                 else if (ReferenceEquals(value, SamplerState.LinearWrap))
+                    newSamplerState = _samplerStateLinearWrap;
+                else if (ReferenceEquals(value, SamplerState.TriLinearClamp))
+                    newSamplerState = _samplerStateLinearClamp;
+                else if (ReferenceEquals(value, SamplerState.TriLinearBorder))
+                    newSamplerState = _samplerStateLinearBorder;
+                else if (ReferenceEquals(value, SamplerState.TriLinearWrap))
                     newSamplerState = _samplerStateLinearWrap;
                 else if (ReferenceEquals(value, SamplerState.PointClamp))
                     newSamplerState = _samplerStatePointClamp;

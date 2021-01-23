@@ -8,8 +8,8 @@ namespace Microsoft.Xna.Framework.Input
 {
     public static partial class Keyboard
     {   
-        static KeyboardState _keyboardState;
-        static KeyboardState _nextKeyboardState;
+        public static KeyboardState _keyboardState;
+        public static KeyboardState _nextKeyboardState;
 
         private static KeyboardState PlatformGetState()
         {

@@ -3,6 +3,7 @@
 // file 'LICENSE.txt', which is part of this source code package.
 
 using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace Microsoft.Xna.Framework.Graphics
@@ -76,10 +77,13 @@ namespace Microsoft.Xna.Framework.Graphics
                 Samplers[s].type = (SamplerType)reader.ReadByte();
                 Samplers[s].textureSlot = reader.ReadByte();
                 Samplers[s].samplerSlot = reader.ReadByte();
-
-				if (reader.ReadBoolean())
+                var samplerInfo = reader.ReadBoolean();
+               
+				if (samplerInfo)
 				{
-					Samplers[s].state = new SamplerState();
+                //    Trace.WriteLine($"HERE!!");
+                    
+                    Samplers[s].state = new SamplerState();
 					Samplers[s].state.AddressU = (TextureAddressMode)reader.ReadByte();
 					Samplers[s].state.AddressV = (TextureAddressMode)reader.ReadByte();
 					Samplers[s].state.AddressW = (TextureAddressMode)reader.ReadByte();
@@ -96,6 +100,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
                 Samplers[s].name = reader.ReadString();
                 Samplers[s].parameter = reader.ReadByte();
+
+  //              Trace.WriteLine($"{Samplers[s].name} {(Samplers[s].state != null ? Samplers[s].state.Filter : "NA")}");
             }
 
             var cbufferCount = (int)reader.ReadByte();

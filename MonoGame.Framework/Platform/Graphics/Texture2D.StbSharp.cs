@@ -35,19 +35,19 @@ namespace Microsoft.Xna.Framework.Graphics
                 }
             }
 
-            // XNA blacks out any pixels with an alpha of zero.
-            fixed (byte* b = &result.Data[0])
-            {
-                for (var i = 0; i < result.Data.Length; i += 4)
-                {
-                    if (b[i + 3] == 0)
-                    {
-                        b[i + 0] = 0;
-                        b[i + 1] = 0;
-                        b[i + 2] = 0;
-                    }
-                }
-            }
+            //// XNA blacks out any pixels with an alpha of zero.
+            //fixed (byte* b = &result.Data[0])
+            //{
+            //    for (var i = 0; i < result.Data.Length; i += 4)
+            //    {
+            //        if (b[i + 3] == 0)
+            //        {
+            //            b[i + 0] = 0;
+            //            b[i + 1] = 0;
+            //            b[i + 2] = 0;
+            //        }
+            //    }
+            //}
 
             Texture2D texture = null;
             texture = new Texture2D(graphicsDevice, result.Width, result.Height);

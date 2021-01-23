@@ -10,18 +10,18 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public  readonly Effect _effect;
         public EffectTechnique technique;
-		private readonly Shader _pixelShader;
-        private readonly Shader _vertexShader;
+        public readonly Shader _pixelShader;
+        public readonly Shader _vertexShader;
 
-        private readonly BlendState _blendState;
-        private readonly DepthStencilState _depthStencilState;
-        private readonly RasterizerState _rasterizerState;
+        public readonly BlendState _blendState;
+        public readonly DepthStencilState _depthStencilState;
+        public readonly RasterizerState _rasterizerState;
 
 		public string Name { get; private set; }
 
         public EffectAnnotationCollection Annotations { get; private set; }
 
-        internal EffectPass(    Effect effect, 
+        public EffectPass(    Effect effect, 
                                 string name,
                                 Shader vertexShader, 
                                 Shader pixelShader, 
@@ -46,8 +46,8 @@ namespace Microsoft.Xna.Framework.Graphics
 
             Annotations = annotations;
         }
-        
-        internal EffectPass(Effect effect, EffectPass cloneSource)
+
+        public EffectPass(Effect effect, EffectPass cloneSource)
         {
             Debug.Assert(effect != null, "Got a null effect!");
             Debug.Assert(cloneSource != null, "Got a null cloneSource!");
@@ -122,14 +122,17 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             foreach (var sampler in shader.Samplers)
             {
-                var param = _effect.Parameters[sampler.parameter];
-                var texture = param.Data as Texture;
+                //  var param = _effect.Parameters[sampler.parameter];
+                //   var texture = param.Data as Texture;
 
-                textures[sampler.textureSlot] = texture;
+                //   textures[sampler.textureSlot] = texture;
 
                 // If there is a sampler state set it.
                 if (sampler.state != null)
+                {
+                  
                     samplerStates[sampler.samplerSlot] = sampler.state;
+                }
             }
         }
     bool IEqualityComparer<EffectPass>.Equals(EffectPass x, EffectPass y)

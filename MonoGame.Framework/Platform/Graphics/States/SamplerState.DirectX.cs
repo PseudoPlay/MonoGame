@@ -29,15 +29,15 @@ namespace Microsoft.Xna.Framework.Graphics
                 desc.AddressW = GetAddressMode(AddressW);
 
 #if WINDOWS_UAP
-				desc.BorderColor = new SharpDX.Mathematics.Interop.RawColor4(
-					BorderColor.R / 255.0f,
-					BorderColor.G / 255.0f,
-					BorderColor.B / 255.0f,
-					BorderColor.A / 255.0f);
+                desc.BorderColor = new SharpDX.Mathematics.Interop.RawColor4(
+                    BorderColor.R / 255.0f,
+                    BorderColor.G / 255.0f,
+                    BorderColor.B / 255.0f,
+                    BorderColor.A / 255.0f);
 #else
 				desc.BorderColor = BorderColor.ToColor4();
 #endif
-				desc.Filter = GetFilter(Filter, FilterMode);
+                desc.Filter = GetFilter(Filter, FilterMode);
                 desc.MaximumAnisotropy = Math.Min(MaxAnisotropy, device.GraphicsCapabilities.MaxTextureAnisotropy);
                 desc.MipLodBias = MipMapLevelOfDetailBias;
                 desc.ComparisonFunction = ComparisonFunction.ToComparison();

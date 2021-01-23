@@ -52,8 +52,8 @@ namespace Microsoft.Xna.Framework.Graphics
                 SharpDX.Direct3D11.SamplerState state = null;
                 if (sampler != null)
                     state = sampler.GetState(device);
-
-                shaderStage.SetSampler(i, state);
+                if(state!= null)
+                    shaderStage.SetSampler(i, state);
 
                 _d3dDirty &= ~mask;
                 if (_d3dDirty == 0)

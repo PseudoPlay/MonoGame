@@ -26,7 +26,7 @@ namespace Microsoft.Xna.Framework.Graphics
             get { return _inputLayouts; }
         }
 
-        internal VertexShader VertexShader
+        public VertexShader VertexShader
         {
             get
             {
@@ -36,7 +36,7 @@ namespace Microsoft.Xna.Framework.Graphics
             }
         }
 
-        internal PixelShader PixelShader
+        public PixelShader PixelShader
         {
             get
             {

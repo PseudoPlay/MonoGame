@@ -12,16 +12,28 @@ namespace Microsoft.Xna.Framework.Graphics
         {
             AnisotropicClamp = new SamplerState("SamplerState.AnisotropicClamp", TextureFilter.Anisotropic, TextureAddressMode.Clamp);
             AnisotropicWrap = new SamplerState("SamplerState.AnisotropicWrap", TextureFilter.Anisotropic, TextureAddressMode.Wrap);
-            LinearClamp = new SamplerState("SamplerState.LinearClamp", TextureFilter.Linear, TextureAddressMode.Clamp);
-            LinearWrap = new SamplerState("SamplerState.LinearWrap", TextureFilter.Linear, TextureAddressMode.Wrap);
+            AnisotropicBorder = new SamplerState("SamplerState.AnisotropicBorder", TextureFilter.Anisotropic, TextureAddressMode.Border);
+            LinearBorder = new SamplerState("SamplerState.LinearBorder", TextureFilter.LinearMipPoint, TextureAddressMode.Border);
+            LinearClamp = new SamplerState("SamplerState.LinearClamp", TextureFilter.LinearMipPoint, TextureAddressMode.Clamp);
+            LinearWrap = new SamplerState("SamplerState.LinearWrap", TextureFilter.LinearMipPoint, TextureAddressMode.Wrap);
+            TriLinearBorder = new SamplerState("SamplerState.TriLinearBorder", TextureFilter.Linear, TextureAddressMode.Border);
+            TriLinearClamp = new SamplerState("SamplerState.TriLinearClamp", TextureFilter.Linear, TextureAddressMode.Clamp);
+            TriLinearWrap = new SamplerState("SamplerState.TriLinearWrap", TextureFilter.Linear, TextureAddressMode.Wrap);
             PointClamp = new SamplerState("SamplerState.PointClamp", TextureFilter.Point, TextureAddressMode.Clamp);
             PointWrap = new SamplerState("SamplerState.PointWrap", TextureFilter.Point, TextureAddressMode.Wrap);
+            PointBorder = new SamplerState("SamplerState.PointBorder", TextureFilter.LinearMipPoint, TextureAddressMode.Border);
         }
 
         public static readonly SamplerState AnisotropicClamp;
         public static readonly SamplerState AnisotropicWrap;
+        public static readonly SamplerState AnisotropicBorder;
+        public static readonly SamplerState LinearBorder;
         public static readonly SamplerState LinearClamp;
         public static readonly SamplerState LinearWrap;
+        public static readonly SamplerState TriLinearBorder;
+        public static readonly SamplerState TriLinearClamp;
+        public static readonly SamplerState TriLinearWrap;
+        public static readonly SamplerState PointBorder;
         public static readonly SamplerState PointClamp;
         public static readonly SamplerState PointWrap;
 
@@ -160,11 +172,11 @@ namespace Microsoft.Xna.Framework.Graphics
 
         public SamplerState()
         {
-            Filter = TextureFilter.Linear;
+            Filter = TextureFilter.LinearMipPoint;
             AddressU = TextureAddressMode.Wrap;
             AddressV = TextureAddressMode.Wrap;
             AddressW = TextureAddressMode.Wrap;
-            BorderColor = Color.White;
+            BorderColor = Color.Transparent;
             MaxAnisotropy = 4;
             MaxMipLevel = 0;
             MipMapLevelOfDetailBias = 0.0f;
