@@ -1071,15 +1071,15 @@ namespace Microsoft.Xna.Framework.Graphics
             catch (SharpDX.SharpDXException ex)
             {
                 // TODO: How should we deal with a device lost case here?
-                /*               
+                               
                 // If the device was removed either by a disconnect or a driver upgrade, we 
                 // must completely reinitialize the renderer.
-                if (    ex.ResultCode == SharpDX.DXGI.DXGIError.DeviceRemoved ||
-                        ex.ResultCode == SharpDX.DXGI.DXGIError.DeviceReset)
-                    this.Initialize();
-                else
-                    throw;
-                */
+                //if (    ex.ResultCode == SharpDX..DXGIError.DeviceRemoved ||
+                //        ex.ResultCode == SharpDX.DXGI.DXGIError.DeviceReset)
+                //    this.Initialize();
+                //else
+                //    throw;
+                
             }
 
 #endif

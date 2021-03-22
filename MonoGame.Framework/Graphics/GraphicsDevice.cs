@@ -296,7 +296,7 @@ namespace Microsoft.Xna.Framework.Graphics
             // Initialize the main viewport
             _viewport = new Viewport(0, 0,
                                      DisplayMode.Width, DisplayMode.Height);
-            Debug.WriteLine(_viewport.Height);
+           
 
             _viewport.MaxDepth = 1.0f;
 
