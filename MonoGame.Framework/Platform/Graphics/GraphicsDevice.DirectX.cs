@@ -406,8 +406,16 @@ namespace Microsoft.Xna.Framework.Graphics
             Point targetSize;
             using (var backBuffer = SharpDX.Direct3D11.Texture2D.FromSwapChain<SharpDX.Direct3D11.Texture2D>(_swapChain, 0))
             {
+                var desc = new RenderTargetViewDescription()
+                {
+                    Format = Format.B8G8R8A8_UNorm_SRgb,
+                    Dimension = RenderTargetViewDimension.Texture2D
+
+                };
+
                 // Create a view interface on the rendertarget to use on bind.
-                _renderTargetView = new SharpDX.Direct3D11.RenderTargetView(_d3dDevice, backBuffer);
+                _renderTargetView = new SharpDX.Direct3D11.RenderTargetView(_d3dDevice, backBuffer, desc);
+                // Create a view interface on the rendertarget to use on bind.
 
                 // Get the rendertarget dimensions for later.
                 var backBufferDesc = backBuffer.Description;
@@ -1367,6 +1375,54 @@ namespace Microsoft.Xna.Framework.Graphics
             SamplerStates.PlatformSetSamplers(this);
         }
 
+        private int SetUserVertexBuffer(List<SpriteVertices> vertexData, VertexDeclaration vertexDecl)
+        {
+            DynamicVertexBuffer buffer;
+            var vertexCount = vertexData.Count * 4;
+            if (!_userVertexBuffers.TryGetValue(vertexDecl, out buffer) || buffer.VertexCount < vertexCount)
+            {
+                // Dispose the previous buffer if we have one.
+                if (buffer != null)
+                    buffer.Dispose();
+
+                buffer = new DynamicVertexBuffer(this, vertexDecl, Math.Max(vertexCount, 2000), BufferUsage.WriteOnly);
+                _userVertexBuffers[vertexDecl] = buffer;
+            }
+
+            var startVertex = buffer.UserOffset;
+
+
+            if ((vertexCount + buffer.UserOffset) < buffer.VertexCount)
+            {
+                buffer.UserOffset += vertexCount;
+                buffer.SetData(startVertex * vertexDecl.VertexStride, vertexData, SetDataOptions.NoOverwrite);
+            }
+            else
+            {
+                buffer.UserOffset = vertexCount;
+                buffer.SetData(vertexData, SetDataOptions.Discard);
+                startVertex = 0;
+            }
+
+            SetVertexBuffer(buffer);
+
+            return startVertex;
+        }
+        private void PlatformDrawUserIndexedPrimitives(PrimitiveType primitiveType, List<SpriteVertices> vertexData, IndexBuffer indexBuffer, VertexDeclaration vertexDeclaration)
+        {
+            var indexCount = GetElementCountArray(primitiveType, vertexData.Count * 2);
+            var startVertex = SetUserVertexBuffer(vertexData, vertexDeclaration);
+            Indices = indexBuffer;
+            var startIndex = 0;
+
+            lock (_d3dContext)
+            {
+                ApplyState(true);
+
+                _d3dContext.InputAssembler.PrimitiveTopology = ToPrimitiveTopology(primitiveType);
+                _d3dContext.DrawIndexed(indexCount, startIndex, startVertex);
+            }
+        }
         private int SetUserVertexBuffer<T>(T[] vertexData, int vertexOffset, int vertexCount, VertexDeclaration vertexDecl)
             where T : struct
         {

@@ -213,7 +213,7 @@ namespace Microsoft.Xna.Framework.Graphics
             if (vertexStride < elementSizeInBytes)
             throw new ArgumentOutOfRangeException("The vertex stride must be greater than or equal to the size of the specified data (" + elementSizeInBytes + ").");
 
-             PlatformSetData<T>(offsetInBytes, data, startIndex, elementCount, vertexStride, options, bufferSize, elementSizeInBytes);
+            PlatformSetDataInternal<T>(offsetInBytes, data, startIndex, elementCount, vertexStride, options, bufferSize, elementSizeInBytes);
         }
 
         protected void SetDataInternal(int offsetInBytes, List<SpriteVertices> data, SetDataOptions options)

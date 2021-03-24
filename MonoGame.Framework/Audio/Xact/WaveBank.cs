@@ -360,13 +360,13 @@ namespace Microsoft.Xna.Framework.Audio
 
         internal SoundEffectInstance GetSoundEffectInstance(int trackIndex, out bool streaming)
         {
-            if (_streaming)
-            {
-                streaming = true;
-                var stream = _streams[trackIndex];
-                return PlatformCreateStream(stream);
-            }
-            else
+            //if (_streaming)
+            //{
+            //    streaming = true;
+            //    var stream = _streams[trackIndex];
+            //    return PlatformCreateStream(stream);
+            //}
+            //else
             {
                 streaming = false;
                 var sound = _sounds[trackIndex];

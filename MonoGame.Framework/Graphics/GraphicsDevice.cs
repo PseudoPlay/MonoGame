@@ -1287,7 +1287,6 @@ namespace Microsoft.Xna.Framework.Graphics
                 _graphicsMetrics._primitiveCount += vertexData.Count * 2;
             }
         }
-
        
 
         /// <summary>
