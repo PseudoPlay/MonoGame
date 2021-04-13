@@ -14,7 +14,7 @@ using SharpDX.Mathematics.Interop;
 using SharpDX.DXGI;
 
 #if WINDOWS_UAP
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
 using Windows.Graphics.Display;
 using Windows.UI.Core;
 using System.Runtime.InteropServices;
