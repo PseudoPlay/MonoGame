@@ -1,12 +1,12 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 
   <PropertyGroup>
-    <TargetFramework>uap10.0</TargetFramework>
+    <TargetFramework>uap10.0.19041</TargetFramework>
     <!-- TODO: NET45 is here for reflection API (Utilities\ReflectionHelpers), but does not make sense semantically -->
     <DefineConstants>WINDOWS_UAP;DIRECTX11_1;STBSHARP_INTERNAL</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.17134.12</TargetPlatformMinVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <Description>The MonoGame runtime for UWP (Universal Windows Platform) which supports Windows 10 and Xbox One.</Description>
     <PackageTags>monogame;.net core;core;.net standard;standard;uwp</PackageTags>
     <PackageId>MonoGame.Framework.WindowsUniversal</PackageId>
