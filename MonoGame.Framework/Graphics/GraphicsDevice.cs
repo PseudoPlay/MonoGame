@@ -1504,6 +1504,8 @@ namespace Microsoft.Xna.Framework.Graphics
                     return primitiveCount * 3;
                 case PrimitiveType.TriangleStrip:
                     return primitiveCount + 2;
+                case PrimitiveType.PointList:
+                    return primitiveCount;
             }
 
             throw new NotSupportedException();
